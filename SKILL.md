@@ -6,7 +6,7 @@ description: |
 
 # Skill: reorganizar um MFL por estrutura
 
-Caso de origem: projeto 1015 (Canopus, Village das Águas I), anexo, 30/10/2026. 9 plantas (.CPL) em 6 estruturas, 122 desenhos levados pra 6 pavimentos novos. As 9 plantas abriram no TQS depois, sem referência perdida.
+Caso de teste: um MFL com 9 plantas (.CPL) em 6 estruturas, 122 desenhos levados pra 6 pavimentos novos. As 9 plantas abriram no TQS depois, sem referência perdida.
 
 ## O que a skill faz
 
@@ -22,7 +22,7 @@ Cada planta (.CPL) lista os desenhos que ela referencia, num caminho relativo (`
 1. **Trabalhe numa duplicação, nunca no MFL original.** A pessoa duplica o edifício **pelo TQS** (Gerenciador). Cópia pelo Windows não serve: os `EDIFICIO.PAV` e o `EDIFICIO.BDE` continuam apontando pro edifício original. Peça o nome da pasta da duplicação.
 2. **Os pavimentos novos a pessoa cria no Gerenciador do TQS**, na duplicação (nome e altura qualquer; a classe do piso não importa). Não tente criar por script: a API do TQS (`TQSBuild`) abre o edifício, mas o `Save` grava um **edifício novo em `C:\TQS\<nome>`** com os critérios padrão do TQS, em vez de gravar no edifício real. Se já tiver criado esse lixo, apague a pasta nova em `C:\TQS`.
 3. **TQS fechado** durante a movimentação (Gerenciador e Modelador).
-4. Os scripts rodam com o Python que tem o TQS instalado (`python -I`). No Flux o `pip.exe` é bloqueado, use `python -m pip` se precisar.
+4. Os scripts rodam com o Python que tem o TQS instalado (`python -I`). Se o `pip.exe` estiver bloqueado na máquina, use `python -m pip`.
 5. Peça a **lista de pavimentos desejados** e quais siglas vão pra qual. Os nomes dos pavimentos podem ter espaço (ex. `CASA DE BOMBAS`).
 
 ## Passo a passo
@@ -56,9 +56,9 @@ Os `.CPL` são texto (codificação cp1252). Cada desenho referenciado é um blo
 ## Armadilhas e limites
 
 - **Cópia pelo Windows** do edifício aponta pro edifício original (veja "Antes de começar").
-- **Não renomeie a pasta do edifício** direto no Windows (regra do Flux): o TQS deixa de rodar o edifício. Renomeie dentro do TQS.
+- **Não renomeie a pasta do edifício** direto no Windows: o TQS deixa de rodar o edifício. Renomeie dentro do TQS.
 - Os `.TXT` de revisão emitida (ex. `...-R00.TXT`) guardam `PAVIMENTO,<pasta antiga>`. É histórico da emissão, não referência a arquivo. A skill não mexe e não precisa.
 - Os `_CR.DWG` e `_TB.DWG` (carimbo e tabela de ferros) ficam em `PLANTAS`, não se movem.
 - **Não foi verificado** se os próprios DWG têm referências externas (xref) por caminho. Numa amostra, não apareceu nenhuma. Se algum desenho aparecer em branco no TQS, esse é o primeiro lugar a olhar.
-- O formato assumido do .CPL (bloco de 4 linhas por desenho) é o do formato `---V14.0---` (cabeçalho dos .CPL do TQS V25 do Flux). Se o script acusar "formato inesperado", pare e mostre à pessoa em vez de forçar.
+- O formato assumido do .CPL (bloco de 4 linhas por desenho) é o do formato `---V14.0---` (cabeçalho dos .CPL do TQS V25). Se o script acusar "formato inesperado", pare e mostre à pessoa em vez de forçar.
 - Se a pessoa ajustar o layout de uma planta no TQS e salvar, o `.CPL` passa a divergir do gerado pelo script (posições dos desenhos). É esperado.
